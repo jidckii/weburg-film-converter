@@ -43,7 +43,7 @@ while true;do
 
   if [ $job_download_url == "null" ]; then
     date_time_up
-    curl -X PUT -d '{"state": "canceled", "log": "'$date_time' download_url not found"}' $api_url/job/$job_id/ > /dev/null 2>&1
+    curl -X PUT -d '{"state": "failed", "log": "'$date_time' download_url not found"}' $api_url/job/$job_id/ > /dev/null 2>&1
     exit 0
   fi
 
@@ -112,7 +112,6 @@ while true;do
   rsync -e='ssh -p 3389' -r $end_path$job_id/$end_name.tar user@paradev.ru:$paradev_path
 
   date_time_up
-  curl -X PUT -d '{"state": "working", "log": "'$date_time' Copying finished."}' $api_url/job/$job_id/ > /dev/null 2>&1
   curl -X PUT -d '{"state": "working", "log": "'$date_time' Copying finished."}' $api_url/job/$job_id/ > /dev/null 2>&1
 
   rm -r -f queue_path$job_id && rm -r -f $source_path$job_id && rm -r -f $end_path$job_id > /dev/null 2>&1
