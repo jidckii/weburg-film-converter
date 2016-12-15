@@ -1,1 +1,3 @@
 *.sublime-*
+jobs
+test.sh
